@@ -1,0 +1,21 @@
+{
+  "name": "dcd-bot",
+  "version": "0.0.1",
+  "main": "lib/index.js",
+  "author": "qrg <qualle.rhythmus+d@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "node lib/index.js",
+    "build": "babel src -d lib"
+  },
+  "babel": {
+    "presets": ["latest"]
+  },
+  "dependencies": {
+    "discord.js": "^10.0.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-preset-latest": "^6.16.0"
+  }
+}
