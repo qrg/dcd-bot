@@ -6,7 +6,11 @@
   "license": "MIT",
   "scripts": {
     "start": "node lib/index.js",
-    "build": "babel src -d lib"
+    "build": "babel src -d lib",
+    "postinstall": "npm run build"
+  },
+  "engines": {
+    "node": ">= 7.2.0"
   },
   "babel": {
     "presets": ["latest"]
