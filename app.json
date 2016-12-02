@@ -1,0 +1,17 @@
+{
+  "name": "dcd-bot",
+  "description": "minimal discord bot",
+  "repository": "https://github.com/qrg/dcd-bot.git",
+  "logo": "https://raw.githubusercontent.com/qrg/dcd-bot/master/logo.png",
+  "keywords": ["node", "discord", "bot"],
+  "env": {
+    "DISCORD_TOKEN": {
+      "description": "Discord token value.",
+      "required": true
+    },
+    "NPM_CONFIG_PRODUCTION": {
+      "description": "This must be 'false'. Required to build sources using babel before deployment.",
+      "required": true
+    }
+  }
+}
