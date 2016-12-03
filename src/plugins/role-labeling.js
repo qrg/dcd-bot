@@ -2,6 +2,18 @@
 
 import {isMentionToBot, removeMentionsFromContent} from '../helpers/mention';
 
+// https://discord.js.org/#/docs/main/master/typedef/PermissionResolvable
+const UNAVAILABLE_PERMISSIONS = [
+  "KICK_MEMBERS",
+  "BAN_MEMBERS",
+  "ADMINISTRATOR",
+  "MANAGE_CHANNELS",
+  "MANAGE_GUILD",
+  "MANAGE_MESSAGES",
+  "MANAGE_NICKNAMES",
+  "MANAGE_ROLES_OR_PERMISSIONS"
+];
+
 const assignRole = (roleName, authorId, guild) => {
   return new Promise((done, reject) => {
     const member = guild.members.find('id', authorId);
@@ -32,6 +44,14 @@ const unassignRole = (roleName, authorId, guild) => {
   });
 };
 
+const listRoles = (roles) => {
+  return roles
+    .filter(role => {
+      return role.name !== '@everyone' && !UNAVAILABLE_PERMISSIONS.some(p => role.hasPermission(p));
+    })
+    .map(role => role.name);
+};
+
 const roleLabeling = {
   event: 'message',
   help: [
@@ -42,6 +62,10 @@ const roleLabeling = {
     {
       example: '@mentionToBot unassign ${ROLE_NAME}',
       description: 'Unassign you specified role.'
+    },
+    {
+      example: '@mentionToBot list roles',
+      description: 'List available roles.'
     }
   ],
   callback: (client, message) => {
@@ -52,11 +76,6 @@ const roleLabeling = {
     const content = removeMentionsFromContent(message.content);
     const contents = content.split(' ');
     const roleName = contents.splice(1).join(' ');
-
-    if (!/^(un)*assign/i.test(content)) {
-      return;
-    }
-
     const authorId = message.author.id;
     const guild = message.guild;
 
@@ -80,6 +99,16 @@ const roleLabeling = {
         .catch((err) => {
           message.reply(err);
         });
+
+      return;
+    }
+
+    if (/^list roles/i.test(content)) {
+      const roleNames = listRoles(guild.roles)
+        .sort()
+        .map((name, i) => `${i}. \`${name}\``);
+
+      message.channel.sendMessage(`\n\n**Available roles**\n\n${roleNames.join('\n')}`);
     }
   }
 };

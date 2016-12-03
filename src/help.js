@@ -15,5 +15,5 @@ export default function showHelp(message, plugins) {
     return `\`${h.example}\`\n${h.description}\n`
   }).join('\n');
 
-  message.reply(`\n${answers}`);
+  message.channel.sendMessage(`\n${answers}`);
 }
