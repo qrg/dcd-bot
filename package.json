@@ -1,6 +1,6 @@
 {
   "name": "dcd-bot",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "main": "lib/index.js",
   "author": "qrg <qualle.rhythmus+d@gmail.com>",
   "license": "MIT",
